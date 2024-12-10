@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class PsychologySurvey {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // دریافت اطلاعات شخصی
+        System.out.print("نام و نام خانوادگی: ");
+        String fullName = scanner.nextLine();
+
+        System.out.print("سن: ");
+        int age = scanner.nextInt();
+        scanner.nextLine(); // برای خواندن خط جدید
+
+        System.out.print("نام دکتر: ");
+        String doctorName = scanner.nextLine();
+
+        System.out.print("تاریخ مراجعه (مثلا 1402/01/01): ");
+        String visitDate = scanner.nextLine();
+
+        // سوالات روانشناسی
+        int totalScore = 0;
+        String[] questions = {
+            "آیا احساس خوشحالی می‌کنید؟ (بله/نه)",
+            "آیا خواب کافی دارید؟ (بله/نه)",
+            "آیا به خودتان اعتماد دارید؟ (بله/نه)",
+            "آیا احساس تنش می‌کنید؟ (بله/نه)",
+            "آیا از فعالیت‌های روزمره لذت می‌برید؟ (بله/نه)"
+        };
+
+        int[] scores = {20, 20, 20, 0, 20}; // امتیازات مربوط به بله
+        for (int i = 0; i < questions.length; i++) {
+            System.out.print(questions[i] + " ");
+            String answer = scanner.nextLine().toLowerCase();
+
+            if (answer.equals("بله")) {
+                totalScore += scores[i];
+            } else if (answer.equals("نه")) {
+                totalScore += (scores[i] == 0 ? 0 : 0); // امتیاز 0 برای سوالاتی که "نه" است
+            } else {
+                System.out.println("پاسخ نامعتبر است. لطفا 'بله' یا 'نه' وارد کنید.");
+                i--; // سوال را دوباره بپرسید
+            }
+        }
+
+        // نمایش نتایج
+        System.out.println("\nنتایج:");
+        System.out.println("نام و نام خانوادگی: " + fullName);
+        System.out.println("سن: " + age);
+        System.out.println("نام دکتر: " + doctorName);
+        System.out.println("تاریخ مراجعه: " + visitDate);
+        System.out.println("امتیاز کل: " + totalScore);
+
+        // توصیه بر اساس امتیاز
+        if (totalScore >= 80) {
+            System.out.println("توصیه: وضعیت روانی خوبی دارید.");
+        } else if (totalScore >= 40) {
+            System.out.println("توصیه: ممکن است به مشاوره نیاز داشته باشید.");
+        } else {
+            System.out.println("توصیه: بهتر است با یک متخصص مشورت کنید.");
+        }
+
+        scanner.close();
+    }
+}
